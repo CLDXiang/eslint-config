@@ -1,7 +1,5 @@
 module.exports = {
-  extends: [
-    '@antfu/eslint-config-vue',
-  ],
+  extends: ['@antfu/eslint-config-vue'],
   rules: {
     // basic
     'import/order': ['error', {

@@ -1,8 +1,5 @@
 module.exports = {
-  extends: [
-    '@cldxiang/eslint-config-basic',
-    '@antfu/eslint-config-ts',
-  ],
+  extends: ['@antfu/eslint-config-ts'],
   rules: {
     // basic
     'import/order': ['error', {
