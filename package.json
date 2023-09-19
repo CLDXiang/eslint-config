@@ -6,17 +6,15 @@
   "author": "Anthony Fu <anthonyfu117@hotmail.com> (https://github.com/antfu/)",
   "license": "MIT",
   "scripts": {
-    "lint": "pnpm -r run stub && eslint .",
+    "lint": "eslint .",
     "test": "pnpm -r run test",
-    "build": "pnpm -r run build",
-    "prepare": "pnpm -r run stub",
     "release": "bumpp -r && pnpm -r publish"
   },
   "devDependencies": {
     "@cldxiang/eslint-config": "workspace:*",
+    "@stylistic/eslint-plugin-migrate": "^0.0.3",
     "bumpp": "^9.2.0",
-    "eslint": "^8.48.0",
-    "eslint-plugin-cldxiang": "workspace:*",
+    "eslint": "^8.49.0",
     "rimraf": "^5.0.1",
     "typescript": "^5.2.2"
   }
