@@ -10,15 +10,25 @@ Forked from [@antfu/eslint-config](https://github.com/antfu/eslint-config)
 pnpm add -D eslint @cldxiang/eslint-config
 ```
 
-### Config `.eslintrc`
+### Create config file
 
-```json
-{
-  "extends": "@cldxiang"
-}
+With [`"type": "module"`](https://nodejs.org/api/packages.html#type) in `package.json` (recommended):
+
+```js
+// eslint.config.js
+import cldxiang from '@cldxiang/eslint-config'
+
+export default cldxiang()
 ```
 
-> You don't need `.eslintignore` normally as it has been provided by the preset.
+With CJS:
+
+```js
+// eslint.config.js
+const cldxiang = require('@cldxiang/eslint-config').default
+
+module.exports = cldxiang()
+```
 
 ### More
 

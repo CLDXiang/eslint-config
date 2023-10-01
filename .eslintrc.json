@@ -1,9 +1,0 @@
-{
-  "extends": [
-    "@cldxiang",
-    "plugin:@stylistic/migrate/recommended"
-  ],
-  "rules": {
-    "vue/multi-word-component-names": "off"
-  }
-}
