@@ -3,7 +3,8 @@ import { execa } from 'execa'
 import fg from 'fast-glob'
 import fs from 'fs-extra'
 import { afterAll, beforeAll, it } from 'vitest'
-import type { FlatESLintConfigItem, OptionsConfig } from '@antfu/eslint-config'
+import type { OptionsConfig } from '../src/types'
+import type { FlatESLintConfigItem } from '@antfu/eslint-config'
 
 beforeAll(async () => {
   await fs.rm('_fixtures', { recursive: true, force: true })
@@ -19,11 +20,13 @@ runWithConfig('js', {
 runWithConfig('all', {
   typescript: true,
   vue: true,
+  tailwind: true,
 })
 runWithConfig('no-style', {
   typescript: true,
   vue: true,
   stylistic: false,
+  tailwind: true,
 })
 
 // https://github.com/antfu/eslint-config/issues/255

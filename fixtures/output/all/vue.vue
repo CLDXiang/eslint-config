@@ -13,7 +13,7 @@ function incrementCounter() {
 
 <template>
   <div>
-    <h1>
+    <h1 class="mx-1 bg-white p-4">
       {{ greeting }}
     </h1>
     <button @click="incrementCounter">

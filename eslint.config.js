@@ -4,6 +4,7 @@ export default cldxiang(
   {
     vue: true,
     typescript: true,
+    tailwind: true,
     ignores: [
       'fixtures',
       '_fixtures',
