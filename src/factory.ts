@@ -8,6 +8,8 @@ export function cldxiang(options: OptionsConfig & FlatESLintConfigItem = {}, ...
   const { tailwind: enableTailwind = isPackageExists('tailwindcss'), stylistic: enableStylistic = true } = options
   const configs: FlatESLintConfigItem[][] = []
 
+  const isNuxtExists = isPackageExists('nuxt')
+
   if (enableTailwind) configs.push(tailwind())
 
   return combine(
@@ -22,7 +24,7 @@ export function cldxiang(options: OptionsConfig & FlatESLintConfigItem = {}, ...
         vue: {
           'vue/require-prop-types': 'warn',
           'vue/require-default-prop': 'warn',
-          'vue/multi-word-component-names': 'warn',
+          'vue/multi-word-component-names': isNuxtExists ? 0 : 'warn',
           'vue/prefer-import-from-vue': 'warn',
           'vue/no-v-text-v-html-on-component': 'warn',
           'vue/no-dupe-keys': 'warn',
