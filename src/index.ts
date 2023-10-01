@@ -8,15 +8,6 @@ export default function cldxiang(...args: Parameters<typeof antfu>): ReturnType<
     ...options,
     overrides: {
       ...options.overrides,
-      javascript: {
-        'import/order': ['error', {
-          'groups': ['builtin', 'external', 'unknown', 'internal', 'parent', 'index', 'sibling', 'object', 'type'],
-          'newlines-between': 'never',
-          'alphabetize': { order: 'asc', caseInsensitive: true },
-        }],
-        'antfu/if-newline': 'off',
-        ...options.overrides?.javascript,
-      },
       typescript: {
         'ts/no-empty-function': 'warn',
         ...options.overrides?.typescript,
@@ -37,11 +28,19 @@ export default function cldxiang(...args: Parameters<typeof antfu>): ReturnType<
       },
     },
   }
-  return antfu(...[myOptions, isStylisticDisabled
-    ? {}
-    : {
-        rules: {
-          'style/brace-style': ['error', '1tbs', { allowSingleLine: true }],
-        },
-      }, ...args.slice(1)] as Parameters<typeof antfu>)
+  return antfu(...[myOptions, {
+    rules: {
+      'import/order': ['error', {
+        'groups': ['builtin', 'external', 'unknown', 'internal', 'parent', 'index', 'sibling', 'object', 'type'],
+        'newlines-between': 'never',
+        'alphabetize': { order: 'asc', caseInsensitive: true },
+      }],
+      'antfu/if-newline': 'off',
+      ...(isStylisticDisabled
+        ? {}
+        : {
+            'style/brace-style': ['error', '1tbs', { allowSingleLine: true }],
+          }),
+    },
+  }, ...args.slice(1)] as Parameters<typeof antfu>)
 }
