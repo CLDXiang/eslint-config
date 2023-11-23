@@ -1,12 +1,12 @@
-import { pluginTailwind } from '../plugins'
-import type { FlatESLintConfigItem } from '@antfu/eslint-config'
+import { type FlatConfigItem, interopDefault } from '@antfu/eslint-config'
 
-export function tailwind(): FlatESLintConfigItem[] {
+export async function tailwind(): Promise<FlatConfigItem[]> {
   return [
     {
       name: 'cldxiang:tailwind',
       plugins: {
-        tailwindcss: pluginTailwind,
+        // @ts-expect-error missing types
+        tailwindcss: await interopDefault(import('eslint-plugin-tailwindcss')),
       },
       rules: {
         'tailwindcss/classnames-order': 'warn',

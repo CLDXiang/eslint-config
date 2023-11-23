@@ -4,7 +4,7 @@ import fg from 'fast-glob'
 import fs from 'fs-extra'
 import { afterAll, beforeAll, it } from 'vitest'
 import type { OptionsConfig } from '../src/types'
-import type { FlatESLintConfigItem } from '@antfu/eslint-config'
+import type { FlatConfigItem } from '@antfu/eslint-config'
 
 beforeAll(async () => {
   await fs.rm('_fixtures', { recursive: true, force: true })
@@ -28,6 +28,22 @@ runWithConfig('no-style', {
   stylistic: false,
   tailwind: true,
 })
+runWithConfig(
+  'tab-double-quotes',
+  {
+    typescript: true,
+    vue: true,
+    stylistic: {
+      indent: 'tab',
+      quotes: 'double',
+    },
+  },
+  {
+    rules: {
+      'style/no-mixed-spaces-and-tabs': 'off',
+    },
+  },
+)
 
 // https://github.com/antfu/eslint-config/issues/255
 runWithConfig(
@@ -42,7 +58,7 @@ runWithConfig(
   },
 )
 
-function runWithConfig(name: string, configs: OptionsConfig, ...items: FlatESLintConfigItem[]) {
+function runWithConfig(name: string, configs: OptionsConfig, ...items: FlatConfigItem[]) {
   it.concurrent(name, async ({ expect }) => {
     const from = resolve('fixtures/input')
     const output = resolve('fixtures/output', name)
@@ -65,7 +81,7 @@ export default cldxiang(
 
     await execa('npx', ['eslint', '.', '--fix'], {
       cwd: target,
-      stdio: 'inherit',
+      stdio: 'pipe',
     })
 
     const files = await fg('**/*', {
@@ -77,8 +93,8 @@ export default cldxiang(
     })
 
     await Promise.all(files.map(async (file) => {
-      let content = (await fs.readFile(join(target, file), 'utf-8'))
-      const source = (await fs.readFile(join(from, file), 'utf-8'))
+      let content = await fs.readFile(join(target, file), 'utf-8')
+      const source = await fs.readFile(join(from, file), 'utf-8')
       if (content === source)
         content = '// unchanged\n'
       await expect.soft(content).toMatchFileSnapshot(join(output, file))

@@ -27,5 +27,9 @@
     "json",
     "jsonc",
     "yaml"
+  ],
+  "cSpell.words": [
+    "bumpp",
+    "tailwindcss"
   ]
 }
