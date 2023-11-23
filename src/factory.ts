@@ -1,16 +1,18 @@
 import antfu, { combine } from '@antfu/eslint-config'
 import { isPackageExists } from 'local-pkg'
-import { tailwind } from './configs'
+import { tailwind, toml } from './configs'
 import type { OptionsConfig } from './types'
 import type { FlatConfigItem } from '@antfu/eslint-config'
 
 export async function cldxiang(options: OptionsConfig & FlatConfigItem = {}, ...userConfigs: (FlatConfigItem | FlatConfigItem[])[]): Promise<FlatConfigItem[]> {
-  const { tailwind: enableTailwind = isPackageExists('tailwindcss'), stylistic: enableStylistic = true } = options
+  const { tailwind: enableTailwind = isPackageExists('tailwindcss'), toml: enableToml = true, stylistic: enableStylistic = true } = options
   const configs: FlatConfigItem[][] = []
 
   const isNuxtExists = isPackageExists('nuxt')
 
   if (enableTailwind) configs.push(await tailwind())
+
+  if (enableToml) configs.push(await toml())
 
   return combine(
     ...await antfu({

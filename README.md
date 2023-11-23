@@ -3,6 +3,7 @@
 Forked from [@antfu/eslint-config](https://github.com/antfu/eslint-config)
 
 - `tailwind()` for tailwindcss support (require peerDependency `eslint-plugin-tailwindcss`)
+- `toml()` for TOML support
 - Some rules are modified for my personal preference (see [factory](./src/factory.ts))
 
 ## Usage
