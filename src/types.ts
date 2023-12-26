@@ -7,10 +7,4 @@ export type OptionsConfig = AntfuOptionsConfig & {
    * @default auto-detect based on the dependencies
    */
   tailwind?: boolean
-  /**
-   * Enable TOML support.
-   *
-   * @default auto-detect true
-   */
-  toml?: boolean
 }

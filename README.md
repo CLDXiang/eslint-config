@@ -3,7 +3,6 @@
 Forked from [@antfu/eslint-config](https://github.com/antfu/eslint-config)
 
 - `tailwind()` for tailwindcss support (require peerDependency `eslint-plugin-tailwindcss`)
-- `toml()` for TOML support
 - Some rules are modified for my personal preference (see [factory](./src/factory.ts))
 
 ## Usage
@@ -20,18 +19,18 @@ With [`"type": "module"`](https://nodejs.org/api/packages.html#type) in `package
 
 ```js
 // eslint.config.js
-import cldxiang from '@cldxiang/eslint-config'
+import config from '@cldxiang/eslint-config'
 
-export default cldxiang()
+export default config()
 ```
 
 With CJS:
 
 ```js
 // eslint.config.js
-const cldxiang = require('@cldxiang/eslint-config').default
+const config = require('@cldxiang/eslint-config').default
 
-module.exports = cldxiang()
+module.exports = config()
 ```
 
 ### More

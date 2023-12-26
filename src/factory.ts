@@ -1,41 +1,52 @@
 import antfu, { combine } from '@antfu/eslint-config'
 import { isPackageExists } from 'local-pkg'
-import { tailwind, toml } from './configs'
+import { tailwind } from './configs'
 import type { OptionsConfig } from './types'
-import type { FlatConfigItem } from '@antfu/eslint-config'
+import type { FlatConfigItem, OptionsTypescript } from '@antfu/eslint-config'
 
 export async function cldxiang(options: OptionsConfig & FlatConfigItem = {}, ...userConfigs: (FlatConfigItem | FlatConfigItem[])[]): Promise<FlatConfigItem[]> {
-  const { tailwind: enableTailwind = isPackageExists('tailwindcss'), toml: enableToml = true, stylistic: enableStylistic = true } = options
+  const { tailwind: enableTailwind = isPackageExists('tailwindcss'), stylistic: enableStylistic = true } = options
   const configs: FlatConfigItem[][] = []
 
   const isNuxtExists = isPackageExists('nuxt')
 
   if (enableTailwind) configs.push(await tailwind())
 
-  if (enableToml) configs.push(await toml())
+  let typescriptOptions: false | OptionsTypescript
+  if (options.typescript === false) typescriptOptions = false
+  else if (options.typescript === true || options.typescript === undefined) typescriptOptions = {}
+  else typescriptOptions = options.typescript
+  if (typescriptOptions) {
+    typescriptOptions.overrides = {
+      'ts/no-empty-function': 'warn',
+      ...typescriptOptions.overrides,
+    }
+  }
+
+  let vueOptions: false | OptionsTypescript
+  if (options.vue === false) vueOptions = false
+  else if (options.vue === true || options.vue === undefined) vueOptions = {}
+  else vueOptions = options.vue
+  if (vueOptions) {
+    vueOptions.overrides = {
+      'vue/require-prop-types': 'warn',
+      'vue/require-default-prop': 'warn',
+      'vue/multi-word-component-names': isNuxtExists ? 0 : 'warn',
+      'vue/prefer-import-from-vue': 'warn',
+      'vue/no-v-text-v-html-on-component': 'warn',
+      'vue/no-dupe-keys': 'warn',
+      ...(enableStylistic
+        ? { 'vue/brace-style': ['error', '1tbs', { allowSingleLine: true }] }
+        : {}),
+      ...vueOptions.overrides,
+    }
+  }
 
   return combine(
     ...await antfu({
       ...options,
-      overrides: {
-        ...options.overrides,
-        typescript: {
-          'ts/no-empty-function': 'warn',
-          ...options.overrides?.typescript,
-        },
-        vue: {
-          'vue/require-prop-types': 'warn',
-          'vue/require-default-prop': 'warn',
-          'vue/multi-word-component-names': isNuxtExists ? 0 : 'warn',
-          'vue/prefer-import-from-vue': 'warn',
-          'vue/no-v-text-v-html-on-component': 'warn',
-          'vue/no-dupe-keys': 'warn',
-          ...(enableStylistic
-            ? { 'vue/brace-style': ['error', '1tbs', { allowSingleLine: true }] }
-            : {}),
-          ...options.overrides?.vue,
-        },
-      },
+      typescript: typescriptOptions,
+      vue: vueOptions,
     }),
     ...configs,
     {
