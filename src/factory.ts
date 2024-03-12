@@ -2,11 +2,11 @@ import antfu, { combine } from '@antfu/eslint-config'
 import { isPackageExists } from 'local-pkg'
 import { tailwind } from './configs'
 import type { OptionsConfig } from './types'
-import type { FlatConfigItem, OptionsTypescript } from '@antfu/eslint-config'
+import type { FlatConfigItem, OptionsTypescript, UserConfigItem } from '@antfu/eslint-config'
 
-export async function cldxiang(options: OptionsConfig & FlatConfigItem = {}, ...userConfigs: (FlatConfigItem | FlatConfigItem[])[]): Promise<FlatConfigItem[]> {
+export async function cldxiang(options: OptionsConfig & FlatConfigItem = {}, ...userConfigs: (UserConfigItem | UserConfigItem[])[]): Promise<UserConfigItem[]> {
   const { tailwind: enableTailwind = isPackageExists('tailwindcss'), stylistic: enableStylistic = true } = options
-  const configs: FlatConfigItem[][] = []
+  const configs: UserConfigItem[][] = []
 
   const isNuxtExists = isPackageExists('nuxt')
 
